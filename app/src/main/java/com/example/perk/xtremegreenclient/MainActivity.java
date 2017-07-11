@@ -37,15 +37,55 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //XtremeGreen = FirebaseDatabase.getInstance().getReferenceFromUrl("https://xtremegreen-group9.firebaseio.com/");
+        XtremeGreenTemp = FirebaseDatabase.getInstance().getReference("Tempurature");
+        XtremeGreenLight = FirebaseDatabase.getInstance().getReference("Light");
         XtremeGreenHum = FirebaseDatabase.getInstance().getReference("Humidty");
-        //XtremeGreen = XtremeGreen.child("xtremegreen-group9");
+
 
         tv1 = (TextView) findViewById(R.id.tempText);
         tv2 = (TextView) findViewById(R.id.lightText);
         tv3 = (TextView) findViewById(R.id.humidityText);
 
         //final Query humidityQuery = XtremeGreen.orderByChild("Humidity");
+    /** Just tap the button, and it shows. It takes the value from the firebase reference as a snapshot, and then stores it as a string. Places it as the textObject. Simple.
+     * */
+
+        tv1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                XtremeGreenTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String obj = (String) dataSnapshot.getValue();
+                        tv1.setText(obj);
+                    }
+
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println("Error.");
+                    }
+                });
+            }
+
+            ;
+        });
+
+        tv2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                XtremeGreenLight.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String obj = (String) dataSnapshot.getValue();
+                        tv2.setText(obj);
+                    }
+
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println("Error.");
+                    }
+                });
+
+
+            }
+
+        });
 
         tv3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -55,45 +95,14 @@ public class MainActivity extends AppCompatActivity {
                         String obj = (String) dataSnapshot.getValue();
                         tv3.setText(obj);
                     }
+
                     public void onCancelled(DatabaseError databaseError) {
                         System.out.println("Error.");
                     }
-            });
-
-
-
-        };
-        /*XtremeGreen.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                dataSnapshot.getChildren().iterator().next().getValue(GreenhouseVariables.class);
+                });
             }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
         });
-
-    }}
-
-
-
+    }
+}
 //comments and stuff for things
+
