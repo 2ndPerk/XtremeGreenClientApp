@@ -21,14 +21,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //takes 2 arrays(x and y axis) and the number of total inputs, and populates the graph
-    public void populateGraph(int[] x, int[] y, int num) {
+    public void populateGraph(double[] x, double[] y, int num) {
         GraphView graph = (GraphView) findViewById(R.id.sampleGraph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataArray(x,y,num));
         graph.addSeries(series);
     }
 
     //this turns the arrays into data points
-    public DataPoint[] dataArray(int[] x, int[] y, int num){
+    public DataPoint[] dataArray(double[] x, double[] y, int num){
         DataPoint[] r = new DataPoint[num];
         for(int i = 0; i<num; i++) {
             r[i] = new DataPoint(x[i],y[i]);
@@ -39,17 +39,17 @@ public class MainActivity extends AppCompatActivity {
     //test
     public void testPopulate(){
         int num = 5;
-        int[] x = randomArray(num);
-        int[] y = randomArray(num);
+        double[] x = randomArray(num);
+        double[] y = randomArray(num);
         Arrays.sort(x);
         populateGraph(x,y,num);
     }
 
     //random array generation for test
-    public int[] randomArray(int i){
-        int[] r = new int[i];
-        for(int j = 0; j<i; j++){
-            r[j] = (int) (Math.random()*10);
+    public double[] randomArray(int num){
+        double[] r = new double[num];
+        for(int i = 0; i<num; i++){
+            r[i] = Math.random()*10;
         }
         return r;
     }
