@@ -9,57 +9,63 @@
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="85dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Temperature" />
+        android:text="Temperature"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/imageView5"
-        android:layout_alignStart="@+id/editText2"
-        android:layout_marginBottom="78dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Light" />
+        android:text="Light"
+        android:layout_alignBottom="@+id/imageView4"
+        android:layout_alignStart="@+id/editText2" />
 
     <EditText
         android:id="@+id/editText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/editText3"
-        android:layout_marginBottom="132dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Humidity" />
+        android:text="Humidity"
+        android:layout_alignBottom="@+id/imageView5"
+        android:layout_alignStart="@+id/editText3" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/temperature_icon"
-        android:layout_alignTop="@+id/editText2"
-        android:layout_toStartOf="@+id/editText2"
-        android:layout_marginEnd="17dp" />
+        android:layout_marginEnd="10dp"
+        android:layout_above="@+id/imageView4"
+        android:layout_toStartOf="@+id/editText3"
+        android:layout_marginBottom="19dp" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/light_icon"
+        android:layout_above="@+id/imageView5"
         android:layout_alignStart="@+id/imageView3"
-        android:layout_alignTop="@+id/editText3"
-        app:srcCompat="@mipmap/light_icon" />
+        android:layout_marginBottom="23dp" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/humidity_icon"
-        android:layout_alignBottom="@+id/editText4"
-        android:layout_alignStart="@+id/imageView4" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_marginBottom="14dp" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/sampleGraph"
+        android:layout_width="match_parent"
+        android:layout_height="200dip" /> />
+
 </RelativeLayout>
