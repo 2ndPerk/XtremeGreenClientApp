@@ -45,7 +45,7 @@ public class GreenhouseVariables {
 
     @Override
     public String toString(){
-        return "HR: " + this.HR + "\n" + "Humidity: " + this.humidity + "\n" + "Light: " + this.light + "\n" + "Temperature: " + this.temperature;
+        return "Humidity: " + this.humidity + "\n" + "Light: " + this.light + "\n" + "Temperature: " + this.temperature;
     }
 
 }

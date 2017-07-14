@@ -62,4 +62,40 @@
         app:srcCompat="@mipmap/humidity_icon"
         android:layout_alignBottom="@+id/humidityText"
         android:layout_alignStart="@+id/imageView4" />
+
+    <Button
+        android:id="@+id/temprange2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_marginBottom="19dp"
+        android:layout_toEndOf="@+id/tempText"
+        android:text="Range" />
+
+    <TextView
+        android:id="@+id/temprange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/temprange2"
+        android:layout_marginEnd="12dp"
+        android:text="Button"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:id="@+id/lightrange2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView4"
+        android:layout_marginBottom="15dp"
+        android:layout_toEndOf="@+id/lightText"
+        android:text="Range" />
+
+    <Button
+        android:id="@+id/humidityrange2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lightText"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/humidityText"
+        android:text="Range" />
 </RelativeLayout>

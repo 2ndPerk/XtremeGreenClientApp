@@ -1,8 +1,16 @@
 package com.example.perk.xtremegreenclient;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,19 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     private TextView tv1, tv2, tv3;
+    private Button blight, btemp, bhum;
+    private Ranges rangeHum, rangeTemp, rangeLight;
 
-    private double temp1 = 23.2;
-    private double temp2 = 18.9;
-    private double temp3 = 34.1;
-    private double light1 = 12.0;
-    private double light2 = 1.2;
-    private double light3 = 2.3;
-    private double hum1 = 23.2;
-    private double hum2 = 18.7;
-    private double hum3 = 15.2;
-
-    //FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference XtremeGreenHR, XtremeGreenHum, XtremeGreenLight, XtremeGreenTemp;
+   //FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference XtremeGreenHum, XtremeGreenLight, XtremeGreenTemp;
     //Firebase.setAndroidContext(this);
 
 
@@ -46,35 +46,88 @@ public class MainActivity extends AppCompatActivity {
         tv2 = (TextView) findViewById(R.id.lightText);
         tv3 = (TextView) findViewById(R.id.humidityText);
 
-        //final Query humidityQuery = XtremeGreen.orderByChild("Humidity");
+
+
+        //I  guess we need shared preferences
+        SharedPreferences sharedPref = getSharedPreferences("com.example.perk.xtremegreenclient", Context.MODE_PRIVATE);
+
+        double lightmin = Double.parseDouble(sharedPref.getString(getString(R.string.lightmin),"0.0"));
+        double lightmax = Double.parseDouble(sharedPref.getString(getString(R.string.lightmax),"0.0"));
+        double tempmin = Double.parseDouble(sharedPref.getString(getString(R.string.tempmin),"0.0"));
+        double tempmax = Double.parseDouble(sharedPref.getString(getString(R.string.tempmax),"0.0"));
+        double hummin = Double.parseDouble(sharedPref.getString(getString(R.string.hummin),"0.0"));
+        double hummax = Double.parseDouble(sharedPref.getString(getString(R.string.hummax),"0.0"));
+
+        rangeHum.setId(3);
+        rangeTemp.setId(1);
+        rangeLight.setId(2);
+
+        rangeHum.setMin(hummin);
+        rangeHum.setMax(hummax);
+        rangeLight.setMax(lightmax);
+        rangeLight.setMin(lightmin);
+        rangeTemp.setMin(tempmin);
+        rangeTemp.setMax(tempmax);   //#mostbeautifulcodeI'vewritten
+
+
+        //notifications are hard
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+
+        final NotificationManager noteMan = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
     /** Just tap the button, and it shows. It takes the value from the firebase reference as a snapshot, and then stores it as a string. Places it as the textObject. Simple.
      * */
 
-        tv1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                XtremeGreenTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+      //  tv1.setOnClickListener(new View.OnClickListener() {
+      //      public void onClick(View v) {
+                XtremeGreenTemp.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String obj = (String) dataSnapshot.getValue();
                         tv1.setText(obj);
+                        if(!testRange(Double.parseDouble(obj.replaceAll("[^\\.0123456789]","")), rangeTemp.getMin(), rangeTemp.getMax()))
+                        {
+                            Notification n = new Notification.Builder(MainActivity.this)
+                                    .setContentTitle("XTREMEGREEEEEEEEN")
+                                    .setContentText("heat's in defeat")
+                                    .setSmallIcon(R.mipmap.temperature_icon).build();
+                            noteMan.notify(1,n);
+                        }
                     }
 
                     public void onCancelled(DatabaseError databaseError) {
                         System.out.println("Error.");
                     }
                 });
-            }
+        //    }
 
             ;
-        });
+    //    });
 
-        tv2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                XtremeGreenLight.addListenerForSingleValueEvent(new ValueEventListener() {
+      //  tv2.setOnClickListener(new View.OnClickListener() {
+      //      public void onClick(View v) {
+                XtremeGreenLight.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String obj = (String) dataSnapshot.getValue();
                         tv2.setText(obj);
+                        if(!testRange(Double.parseDouble(obj.replaceAll("[^\\.0123456789]","")), rangeLight.getMin(), rangeLight.getMax()))
+                        {
+                            Notification n = new Notification.Builder(MainActivity.this)
+                                .setContentTitle("XTREMEGREEEEEEEEN")
+                                .setContentText("light ain't right")
+                                .setSmallIcon(R.mipmap.light_icon).build();
+                            noteMan.notify(2,n);
+                        }
                     }
 
                     public void onCancelled(DatabaseError databaseError) {
@@ -83,26 +136,68 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-            }
+       //     }
 
-        });
+       // });
 
-        tv3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                XtremeGreenHum.addListenerForSingleValueEvent(new ValueEventListener() {
+      //  tv3.setOnClickListener(new View.OnClickListener() {
+      //      public void onClick(View v) {
+                XtremeGreenHum.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String obj = (String) dataSnapshot.getValue();
                         tv3.setText(obj);
+                        if(!testRange(Double.parseDouble(obj.replaceAll("[^\\.0123456789]","")), rangeHum.getMin(), rangeHum.getMax()))
+                        {
+                            Notification n = new Notification.Builder(MainActivity.this)
+                                    .setContentTitle("XTREMEGREEEEEEEEN")
+                                    .setContentText("humidity shmidity")
+                                    .setSmallIcon(R.mipmap.light_icon).build();
+                            noteMan.notify(3,n);
+                        }
                     }
 
                     public void onCancelled(DatabaseError databaseError) {
                         System.out.println("Error.");
                     }
                 });
+      //      }
+      //  });
+
+        btemp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeRangeTemp(rangeTemp);
             }
         });
+
+        blight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeRangeTemp(rangeLight);            }
+        });
+
+        bhum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            changeRangeTemp(rangeHum);
+            }
+        });
+
     }
+    public boolean testRange(double x, double min, double max)
+    {
+        if(x>=min && x<=max)
+            return true;
+        else
+            return false;
+    }
+
+    private void changeRangeTemp(Ranges range) {
+        Intent intent = new Intent(this, RangeSetterActivity.class);// Does not exist yet, make it later
+        intent.putExtra("Range", range);
+        startActivity(intent);
+    }
+
 }
-//comments and stuff for things
 
