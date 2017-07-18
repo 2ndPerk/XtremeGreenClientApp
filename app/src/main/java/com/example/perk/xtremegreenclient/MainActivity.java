@@ -1,5 +1,6 @@
 package com.example.perk.xtremegreenclient;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -53,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
         }
         return r;
     }
+
+    public void seeGraph(int[] x, int[] y, int num){
+        Intent intent = new Intent(this, viewGraph.class);
+
+    }
+
 }
 
 
