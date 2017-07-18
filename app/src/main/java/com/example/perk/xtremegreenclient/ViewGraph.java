@@ -9,14 +9,13 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.Arrays;
-import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class ViewGraph extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_view_graph);
         testPopulate();
 
     }
@@ -55,14 +54,4 @@ public class MainActivity extends AppCompatActivity {
         return r;
     }
 
-    // Displays graph corresponding to button clicked (e.g., humidity)
-    public void chooseGraph(int[] x, int[] y, int num){
-        Intent intent = new Intent(this, ViewGraph.class);
-        intent.putExtra("X_AXIS_ARRAY", x);
-        intent.putExtra("Y_AXIS_ARRAY", y);
-        intent.putExtra("NUM_DATA_POINTS", num);
-    }
-
 }
-
-
