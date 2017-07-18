@@ -49,25 +49,24 @@ public class MainActivity extends AppCompatActivity {
 
 
         //I  guess we need shared preferences
-        SharedPreferences sharedPref = getSharedPreferences("com.example.perk.xtremegreenclient", Context.MODE_PRIVATE);
+       SharedPreferences sharedPref = getSharedPreferences("com.example.perk.xtremegreenclient", Context.MODE_PRIVATE);
 
-        double lightmin = Double.parseDouble(sharedPref.getString(getString(R.string.lightmin),"0.0"));
+       double lightmin = Double.parseDouble(sharedPref.getString(getString(R.string.lightmin),"0.0"));
         double lightmax = Double.parseDouble(sharedPref.getString(getString(R.string.lightmax),"0.0"));
         double tempmin = Double.parseDouble(sharedPref.getString(getString(R.string.tempmin),"0.0"));
         double tempmax = Double.parseDouble(sharedPref.getString(getString(R.string.tempmax),"0.0"));
         double hummin = Double.parseDouble(sharedPref.getString(getString(R.string.hummin),"0.0"));
         double hummax = Double.parseDouble(sharedPref.getString(getString(R.string.hummax),"0.0"));
 
-        rangeHum.setId(3);
-        rangeTemp.setId(1);
-        rangeLight.setId(2);
+        //Why is this not in any order?
+        int humId = 3;
+        int tempId = 1;
+        int lightId = 2;
 
-        rangeHum.setMin(hummin);
-        rangeHum.setMax(hummax);
-        rangeLight.setMax(lightmax);
-        rangeLight.setMin(lightmin);
-        rangeTemp.setMin(tempmin);
-        rangeTemp.setMax(tempmax);   //#mostbeautifulcodeI'vewritten
+
+        rangeHum = new Ranges(hummin,hummax,humId);
+        rangeLight = new Ranges(lightmin,lightmax,lightId);
+        rangeTemp = new Ranges(tempmin,tempmax,tempId);
 
 
         //notifications are hard
@@ -84,11 +83,10 @@ public class MainActivity extends AppCompatActivity {
         final NotificationManager noteMan = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 
+
     /** Just tap the button, and it shows. It takes the value from the firebase reference as a snapshot, and then stores it as a string. Places it as the textObject. Simple.
      * */
 
-      //  tv1.setOnClickListener(new View.OnClickListener() {
-      //      public void onClick(View v) {
                 XtremeGreenTemp.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -108,13 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("Error.");
                     }
                 });
-        //    }
 
-            ;
-    //    });
-
-      //  tv2.setOnClickListener(new View.OnClickListener() {
-      //      public void onClick(View v) {
                 XtremeGreenLight.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -122,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                         tv2.setText(obj);
                         if(!testRange(Double.parseDouble(obj.replaceAll("[^\\.0123456789]","")), rangeLight.getMin(), rangeLight.getMax()))
                         {
-                            Notification n = new Notification.Builder(MainActivity.this)
+                           Notification n = new Notification.Builder(MainActivity.this)
                                 .setContentTitle("XTREMEGREEEEEEEEN")
                                 .setContentText("light ain't right")
                                 .setSmallIcon(R.mipmap.light_icon).build();
@@ -135,14 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
-       //     }
-
-       // });
-
-      //  tv3.setOnClickListener(new View.OnClickListener() {
-      //      public void onClick(View v) {
-                XtremeGreenHum.addValueEventListener(new ValueEventListener() {
+        XtremeGreenHum.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String obj = (String) dataSnapshot.getValue();
@@ -161,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("Error.");
                     }
                 });
-      //      }
-      //  });
+
+        btemp = (Button) findViewById(R.id.temprange2);
 
         btemp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        blight.setOnClickListener(new View.OnClickListener() {
+   /*     blight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeRangeTemp(rangeLight);            }
@@ -179,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
 
         bhum.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick (View v) {
             changeRangeTemp(rangeHum);
             }
-        });
+        });*/
 
     }
     public boolean testRange(double x, double min, double max)
@@ -194,9 +179,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeRangeTemp(Ranges range) {
-        Intent intent = new Intent(this, RangeSetterActivity.class);// Does not exist yet, make it later
-        intent.putExtra("Range", range);
-        startActivity(intent);
+        //Intent intent = new Intent(this, RangeSetterActivity.class);// Does not exist yet, make it later
+        //intent.putExtra("Range", range);
+        //startActivity(intent);
     }
 
 }
