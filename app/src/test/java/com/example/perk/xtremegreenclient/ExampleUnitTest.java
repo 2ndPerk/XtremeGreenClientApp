@@ -9,14 +9,16 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class ExampleUnitTest  extends MainActivity{
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
 
+
     @Test
-    public void TestTester() throws Exception {
-      FireBaseDateTest dateTest = new FireBaseDateTest();
+    public void testRange() throws Exception{
+        assertTrue(!testRange(4.0,5.0,10.0));
     }
+
 }

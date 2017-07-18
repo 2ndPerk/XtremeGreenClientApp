@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 /**
+ * pretty straight forward thing, takes mins and maxes the user enters and assigns them to the ranges objects
  * Created by Miles on 7/14/2017.
  */
 

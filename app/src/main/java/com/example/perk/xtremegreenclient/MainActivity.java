@@ -27,9 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Button blight, btemp, bhum;
     private Ranges rangeHum, rangeTemp, rangeLight;
 
-   //FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference XtremeGreenHum, XtremeGreenLight, XtremeGreenTemp;
-    //Firebase.setAndroidContext(this);
 
 
     @Override
@@ -45,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         tv1 = (TextView) findViewById(R.id.tempText);
         tv2 = (TextView) findViewById(R.id.lightText);
         tv3 = (TextView) findViewById(R.id.humidityText);
+
+        btemp = (Button) findViewById(R.id.temprange2);
+        bhum = (Button) findViewById(R.id.humidityrange2);
+        blight = (Button) findViewById(R.id.lightrange2);
+
 
 
 
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    /** Just tap the button, and it shows. It takes the value from the firebase reference as a snapshot, and then stores it as a string. Places it as the textObject. Simple.
+    /** Updates as firebase does It takes the value from the firebase reference as a snapshot, and then stores it as a string. Places it as the textObject. Simple.
      * */
 
                 XtremeGreenTemp.addValueEventListener(new ValueEventListener() {
@@ -147,8 +150,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        btemp = (Button) findViewById(R.id.temprange2);
-
+        //on clicks for setting ranges
         btemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-   /*     blight.setOnClickListener(new View.OnClickListener() {
+        blight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeRangeTemp(rangeLight);            }
@@ -167,9 +169,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick (View v) {
             changeRangeTemp(rangeHum);
             }
-        });*/
+        });
 
     }
+
+    //tests if value is out of set ranges
     public boolean testRange(double x, double min, double max)
     {
         if(x>=min && x<=max)
@@ -177,11 +181,11 @@ public class MainActivity extends AppCompatActivity {
         else
             return false;
     }
-
+    //for launching range setter activity
     private void changeRangeTemp(Ranges range) {
-        //Intent intent = new Intent(this, RangeSetterActivity.class);// Does not exist yet, make it later
-        //intent.putExtra("Range", range);
-        //startActivity(intent);
+        Intent intent = new Intent(this, RangeSetterActivity.class);// Does not exist yet, make it later
+        intent.putExtra("Range", range);
+        startActivity(intent);
     }
 
 }
