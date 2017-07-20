@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private Ranges rangeHum, rangeTemp, rangeLight;
 
     private DatabaseReference XtremeGreenHum, XtremeGreenLight, XtremeGreenTemp;
+    SharedPreferences sharedPref;
+
 
 
     @Override
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //I  guess we need shared preferences
-       SharedPreferences sharedPref = getSharedPreferences("com.example.perk.xtremegreenclient", Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences("com.example.perk.xtremegreenclient", Context.MODE_PRIVATE);
 
        double lightmin = Double.parseDouble(sharedPref.getString(getString(R.string.lightmin),"0.0"));
         double lightmax = Double.parseDouble(sharedPref.getString(getString(R.string.lightmax),"0.0"));
@@ -154,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         btemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Button Test:", "Got here without crashing");
                 changeRangeTemp(rangeTemp);
             }
         });
@@ -161,12 +165,14 @@ public class MainActivity extends AppCompatActivity {
         blight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Button Test:", "Got here without crashing");
                 changeRangeTemp(rangeLight);            }
         });
 
         bhum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
+                Log.d("Button Test:", "Got here without crashing");
             changeRangeTemp(rangeHum);
             }
         });
@@ -183,9 +189,35 @@ public class MainActivity extends AppCompatActivity {
     }
     //for launching range setter activity
     private void changeRangeTemp(Ranges range) {
-        Intent intent = new Intent(this, RangeSetterActivity.class);// Does not exist yet, make it later
+        Log.d("Button Test2:", "Got here without crashing");
+        Intent intent = new Intent(this, RangeSetterActive.class);
         intent.putExtra("Range", range);
+        Log.d("Button Test3:", "Got here without crashing");
         startActivity(intent);
+
+        double lightmin = Double.parseDouble(sharedPref.getString(getString(R.string.lightmin),"0.0"));
+        double lightmax = Double.parseDouble(sharedPref.getString(getString(R.string.lightmax),"0.0"));
+        double tempmin = Double.parseDouble(sharedPref.getString(getString(R.string.tempmin),"0.0"));
+        double tempmax = Double.parseDouble(sharedPref.getString(getString(R.string.tempmax),"0.0"));
+        double hummin = Double.parseDouble(sharedPref.getString(getString(R.string.hummin),"0.0"));
+        double hummax = Double.parseDouble(sharedPref.getString(getString(R.string.hummax),"0.0"));
+
+
+        switch (range.getId()) {
+            case 1:
+                range.setMin(tempmin);
+                range.setMax(tempmax);
+                break;
+            case 2:
+                range.setMin(lightmin);
+                range.setMax(lightmax);
+                break;
+            case 3:
+                range.setMin(hummin);
+                range.setMax(hummax);
+                break;
+        }
+
     }
 
 }

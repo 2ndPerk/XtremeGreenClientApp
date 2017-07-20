@@ -1,29 +1,36 @@
 package com.example.perk.xtremegreenclient;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-/**
- * pretty straight forward thing, takes mins and maxes the user enters and assigns them to the ranges objects
- * Created by Miles on 7/14/2017.
- */
-
-public class RangeSetterActivity extends Activity {
+public class RangeSetterActive extends AppCompatActivity {
     private EditText min, max;
     private Ranges ranges;
 
-    SharedPreferences sharedPref = getSharedPreferences("com.example.perk.xtremegreenclient", Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = sharedPref.edit();
 
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate (Bundle savedInstanceState){
+
+        Log.d("Test:", "Whats going on?");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.range_setter_layout);
+
+        sharedPref = getSharedPreferences("com.example.perk.xtremegreenclient", Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
+
         ranges= (Ranges) getIntent().getSerializableExtra("Range");
+
+        Log.d("Range Min:",Double.toString(ranges.getMin()) );
+        Log.d("Range Max:", Double.toString((ranges.getMax())));
+
         min= (EditText) findViewById(R.id.Min);
         max= (EditText) findViewById(R.id.Max);
 
@@ -40,7 +47,7 @@ public class RangeSetterActivity extends Activity {
 
     }
 
-    public void onSubmitClick(View v)
+  public void onSubmitClick(View v)
     {
         ranges.setMin(Double.parseDouble(min.getText().toString()));
         ranges.setMax(Double.parseDouble(max.getText().toString()));
@@ -69,4 +76,5 @@ public class RangeSetterActivity extends Activity {
     {
         finish();
     }
+
 }
