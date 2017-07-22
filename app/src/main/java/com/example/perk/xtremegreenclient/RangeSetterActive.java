@@ -1,6 +1,8 @@
 package com.example.perk.xtremegreenclient;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +20,6 @@ public class RangeSetterActive extends AppCompatActivity {
     @Override
     protected void onCreate (Bundle savedInstanceState){
 
-        Log.d("Test:", "Whats going on?");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.range_setter_layout);
 
@@ -27,9 +28,6 @@ public class RangeSetterActive extends AppCompatActivity {
 
 
         ranges= (Ranges) getIntent().getSerializableExtra("Range");
-
-        Log.d("Range Min:",Double.toString(ranges.getMin()) );
-        Log.d("Range Max:", Double.toString((ranges.getMax())));
 
         min= (EditText) findViewById(R.id.Min);
         max= (EditText) findViewById(R.id.Max);
@@ -49,17 +47,23 @@ public class RangeSetterActive extends AppCompatActivity {
 
   public void onSubmitClick(View v)
     {
+
+        Intent resultIntent = new Intent();
+      /*  resultIntent.putExtra("rangeID", ranges.getId());
         ranges.setMin(Double.parseDouble(min.getText().toString()));
         ranges.setMax(Double.parseDouble(max.getText().toString()));
+        resultIntent.putExtra("Min", ranges.getMin());
+        resultIntent.putExtra("Max", ranges.getMax());*/
 
         switch (ranges.getId()) {
             case 1:
                 editor.putString(getString(R.string.tempmin), min.getText().toString());
                 editor.putString((getString(R.string.tempmax)), max.getText().toString());
+
                 break;
             case 2:
                 editor.putString((getString(R.string.lightmin)), min.getText().toString());
-                editor.putString((getString(R.string.lightmin)), max.getText().toString());
+                editor.putString((getString(R.string.lightmax)), max.getText().toString());
                 break;
             case 3:
                 editor.putString((getString(R.string.hummin)), min.getText().toString());
@@ -67,6 +71,7 @@ public class RangeSetterActive extends AppCompatActivity {
                 break;
         }
 
+        setResult(Activity.RESULT_OK, resultIntent);
         editor.commit();
         finish();
 
@@ -74,6 +79,8 @@ public class RangeSetterActive extends AppCompatActivity {
 
     public void onCancelClick(View v)
     {
+        Intent resultIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, resultIntent);
         finish();
     }
 
