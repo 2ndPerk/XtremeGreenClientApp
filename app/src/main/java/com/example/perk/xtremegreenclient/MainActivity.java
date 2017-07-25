@@ -20,21 +20,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+
+    //Different functions for each button
+    //This is so that they can be processed differently, such as the name being different for each
+    public void clickHum(View V){
+       clickProc("Humidity");
+    }
+
+    public void clickTemp(View V){
+        clickProc("Temperature");
+    }
+
+    public void clickLight(View V){
+        clickProc("Light");
+    }
+
     //when button clicked to change activity
-    public void onClick(View v){
+    public void clickProc(String name){
         int num = 10;
         double[] x = randomArray(num);
         double[] y = randomArray(num);
         Arrays.sort(x);
-        chooseGraph(x, y ,num);
+        chooseGraph(x, y ,num, name);
     }
 
     // Displays graph corresponding to button clicked (e.g., humidity)
-    public void chooseGraph(double[] x, double[] y, int num){
+    public void chooseGraph(double[] x, double[] y, int num, String name){
         Intent intent = new Intent(this, ViewGraph.class);
         intent.putExtra("X_AXIS_ARRAY", x);
         intent.putExtra("Y_AXIS_ARRAY", y);
         intent.putExtra("NUM_DATA_POINTS", num);
+        intent.putExtra("DATA_TYPE", name);
         startActivity(intent);
     }
 

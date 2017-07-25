@@ -12,8 +12,12 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Temperature"
-        android:layout_alignBottom="@+id/imageView3"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignBottom="@+id/imageButton3"
+        android:layout_toEndOf="@+id/imageButton3"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <EditText
         android:id="@+id/editText3"
@@ -22,8 +26,12 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Light"
-        android:layout_alignBottom="@+id/imageView4"
-        android:layout_alignStart="@+id/editText2" />
+        android:layout_alignBottom="@+id/imageButton2"
+        android:layout_toEndOf="@+id/imageButton"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <EditText
         android:id="@+id/editText4"
@@ -32,46 +40,42 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Humidity"
-        android:layout_alignBottom="@+id/imageView5"
-        android:layout_alignStart="@+id/editText3" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/temperature_icon"
-        android:layout_marginEnd="10dp"
-        android:layout_above="@+id/imageView4"
-        android:layout_toStartOf="@+id/editText3"
-        android:layout_marginBottom="19dp" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/light_icon"
-        android:layout_above="@+id/imageView5"
-        android:layout_alignStart="@+id/imageView3"
-        android:layout_marginBottom="23dp" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/humidity_icon"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/imageView4"
-        android:layout_marginBottom="14dp" />
+        android:layout_alignBottom="@+id/imageButton"
+        android:layout_toEndOf="@+id/imageButton"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
-        app:srcCompat="@mipmap/humidity_icon"
+        android:layout_alignStart="@+id/imageButton3"
+        android:layout_below="@+id/imageButton2"
+        android:layout_marginTop="30dp"
+        android:onClick="clickHum"
+        app:srcCompat="@mipmap/humidity_icon" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="98dp" /><![CDATA[
+        android:layout_alignStart="@+id/imageButton"
+        android:onClick="clickLight"
+        app:srcCompat="@mipmap/light_icon" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageButton"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="28dp"
+        android:onClick="clickTemp"
+        app:srcCompat="@mipmap/temperature_icon" /><![CDATA[
 
     />
 

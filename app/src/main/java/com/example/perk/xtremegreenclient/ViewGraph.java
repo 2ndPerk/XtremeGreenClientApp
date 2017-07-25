@@ -3,10 +3,13 @@ package com.example.perk.xtremegreenclient;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
@@ -20,6 +23,9 @@ public class ViewGraph extends AppCompatActivity {
         double[] x = i.getDoubleArrayExtra("X_AXIS_ARRAY");
         double[] y = i.getDoubleArrayExtra("Y_AXIS_ARRAY");
         int num = i.getIntExtra("NUM_DATA_POINTS",-1);
+        String name = i.getStringExtra("DATA_TYPE");
+        ((EditText)findViewById(R.id.nameText)).setText(name);
+
         populateGraph(x,y,num);
     }
 
