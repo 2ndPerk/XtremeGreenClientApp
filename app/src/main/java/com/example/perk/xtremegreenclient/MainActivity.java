@@ -5,12 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
 import java.util.Arrays;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Different functions for each button
     //This is so that they can be processed differently, such as the name being different for each
+    //currently these go through clickProc to randomize data, but should eventually get data from firebase and call chooseGraph directly
     public void clickHum(View V){
        clickProc("Humidity");
     }
@@ -35,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         clickProc("Light");
     }
 
-    //when button clicked to change activity
+    //creates random data while firebase does not provide any
+    //should be deprecated eventually
     public void clickProc(String name){
         int num = 10;
         double[] x = randomArray(num);
