@@ -36,7 +36,7 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void doesGraph(){
-        onView(withId(R.id.imageButton)).perform(click());
+        onView(withId(R.id.humButton)).perform(click());
         assertNotNull(onView(withId(R.id.sampleGraph)));
     }
 
