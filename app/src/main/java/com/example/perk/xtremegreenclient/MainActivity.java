@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
         final NotificationManager noteMan = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 
-        /** Updates as firebase does It takes the value from the firebase reference as a snapshot, and then stores it as a string. Places it as the textObject. Simple.
-         * */
+        /* Updates as firebase does It takes the value from the firebase reference as a snapshot, and then stores it as a string. Places it as the textObject. Simple.
+         */
 
         XtremeGreenTemp.addValueEventListener(new ValueEventListener() {
                                                   @Override
@@ -108,14 +108,14 @@ public class MainActivity extends AppCompatActivity {
                                                           noteMan.notify(1, n);
                                                       }
                                                   }
-                                              }
-    }
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("Error.");
-            }
-        });
 
-        XtremeGreenLight.addValueEventListener(new ValueEventListener() {
+                                                  public void onCancelled(DatabaseError databaseError) {
+                                                      System.out.println("Error.");
+                                                  }
+                                              });
+
+
+    XtremeGreenLight.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String obj = (String) dataSnapshot.getValue();
@@ -223,50 +223,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//Different functions for each button
-//This is so that they can be processed differently, such as the name being different for each
-//currently these go through clickProc to randomize data, but should eventually get data from firebase and call chooseGraph directly
-public void clickHum(View V){
+    //Different functions for each button
+    //This is so that they can be processed differently, such as the name being different for each
+    //currently these go through clickProc to randomize data, but should eventually get data from firebase and call chooseGraph directly
+    public void clickHum(View V){
         clickProc("Humidity");
-        }
+    }
 
-public void clickTemp(View V){
+    public void clickTemp(View V){
         clickProc("Temperature");
-        }
+    }
 
-public void clickLight(View V){
+    public void clickLight(View V){
         clickProc("Light");
-        }
+    }
 
-//creates random data while firebase does not provide any
-//should be deprecated eventually
-public void clickProc(String name){
+    //creates random data while firebase does not provide any
+    //should be deprecated eventually
+    public void clickProc(String name){
         int num = 10;
         double[] x = randomArray(num);
         double[] y = randomArray(num);
         Arrays.sort(x);
         chooseGraph(x, y ,num, name);
-        }
+    }
 
-// Displays graph corresponding to button clicked (e.g., humidity)
-public void chooseGraph(double[] x, double[] y, int num, String name){
+    // Displays graph corresponding to button clicked (e.g., humidity)
+    public void chooseGraph(double[] x, double[] y, int num, String name){
         Intent intent = new Intent(this, ViewGraph.class);
         intent.putExtra("X_AXIS_ARRAY", x);
         intent.putExtra("Y_AXIS_ARRAY", y);
         intent.putExtra("NUM_DATA_POINTS", num);
         intent.putExtra("DATA_TYPE", name);
         startActivity(intent);
-        }
+    }
 
 
-//random array generation for test
-public double[] randomArray(int num){
+    //random array generation for test
+    public double[] randomArray(int num){
         double[] r = new double[num];
         for(int i = 0; i<num; i++){
-        r[i] = Math.random()*10;
+            r[i] = Math.random()*10;
         }
         return r;
-        }
+    }
 }
 
 
