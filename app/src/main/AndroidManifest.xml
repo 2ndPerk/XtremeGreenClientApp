@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ViewGraph"></activity>
+        <activity android:name=".RangeSetterActive"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">XtremeGreenClient</string>
     <string name="title_activity_view_graph">ViewGraph</string>
+    <string name="lightmin">Light_Min</string>
+    <string name="lightmax">Light_Max</string>
+    <string name="hummin">Hum_Min</string>
+    <string name="hummax">Hum_Max</string>
+    <string name="tempmin">Temp_Min</string>
+    <string name="tempmax">Temp_Max</string>
 </resources>
