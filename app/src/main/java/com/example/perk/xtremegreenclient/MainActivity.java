@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ImageButton;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +30,7 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     private TextView tv1, tv2, tv3;
-    private Button blight, btemp, bhum;
+    private ImageButton blight, btemp, bhum;
     private Ranges rangeHum, rangeTemp, rangeLight;
 
     public static final int Request_Code_A = 1;
@@ -52,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
         tv2 = (TextView) findViewById(R.id.lightText);
         tv3 = (TextView) findViewById(R.id.humidityText);
 
-        btemp = (Button) findViewById(R.id.temprange2);
-        bhum = (Button) findViewById(R.id.humidityrange2);
-        blight = (Button) findViewById(R.id.lightrange2);
+        btemp = (ImageButton) findViewById(R.id.tempButton);
+        bhum = (ImageButton) findViewById(R.id.humButton);
+        blight = (ImageButton) findViewById(R.id.lightButton);
 
 
         //I  guess we need shared preferences
@@ -191,7 +192,14 @@ public class MainActivity extends AppCompatActivity {
     //for launching range setter activity
     private void changeRangeTemp(Ranges range) {
         Intent intent = new Intent(this, RangeSetterActive.class);
+        int num = 100;
+        double[] x = randomArray(num);
+        double[] y = randomArray(num);
+        Arrays.sort(x);
         intent.putExtra("Range", range);
+        intent.putExtra("X_AXIS_ARRAY", x);
+        intent.putExtra("Y_AXIS_ARRAY", y);
+        intent.putExtra("NUM_DATA_POINTS", num);
         startActivityForResult(intent,Request_Code_A);
     }
 
@@ -223,47 +231,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Different functions for each button
-    //This is so that they can be processed differently, such as the name being different for each
-    //currently these go through clickProc to randomize data, but should eventually get data from firebase and call chooseGraph directly
-    public void clickHum(View V){
-        clickProc("Humidity");
-    }
-
-    public void clickTemp(View V){
-        clickProc("Temperature");
-    }
-
-    public void clickLight(View V){
-        clickProc("Light");
-    }
-
-    //creates random data while firebase does not provide any
-    //should be deprecated eventually
-    public void clickProc(String name){
-        int num = 10;
-        double[] x = randomArray(num);
-        double[] y = randomArray(num);
-        Arrays.sort(x);
-        chooseGraph(x, y ,num, name);
-    }
-
-    // Displays graph corresponding to button clicked (e.g., humidity)
-    public void chooseGraph(double[] x, double[] y, int num, String name){
-        Intent intent = new Intent(this, ViewGraph.class);
-        intent.putExtra("X_AXIS_ARRAY", x);
-        intent.putExtra("Y_AXIS_ARRAY", y);
-        intent.putExtra("NUM_DATA_POINTS", num);
-        intent.putExtra("DATA_TYPE", name);
-        startActivity(intent);
-    }
-
-
     //random array generation for test
     public double[] randomArray(int num){
         double[] r = new double[num];
         for(int i = 0; i<num; i++){
-            r[i] = Math.random()*10;
+            r[i] = Math.random()*num;
         }
         return r;
     }
