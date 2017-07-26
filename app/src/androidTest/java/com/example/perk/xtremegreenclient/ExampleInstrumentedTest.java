@@ -39,6 +39,10 @@ public class ExampleInstrumentedTest extends MainActivity {
     FirebaseDatabase fbDatabase = FirebaseDatabase.getInstance();
     DatabaseReference myDatabase = fbDatabase.getReference("GreenhouseVariables");
 
+    @Rule
+    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
+            MainActivity.class);
+
     @Test
     public void useAppContext() throws Exception {
         //test that ranges detection is correct
